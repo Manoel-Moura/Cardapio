@@ -1,62 +1,85 @@
 class CardapioApiModel {
-  int? code;
-  List<Result>? result;
+  Data? data;
 
-  CardapioApiModel({this.code, this.result});
+  CardapioApiModel({this.data});
 
   CardapioApiModel.fromJson(Map<String, dynamic> json) {
-    code = json['code'];
-    if (json['result'] != null) {
-      result = <Result>[];
-      json['result'].forEach((v) {
-        result!.add(new Result.fromJson(v));
+    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
+    }
+    return data;
+  }
+}
+
+class Data {
+  List<Produtos>? produtos;
+
+  Data({this.produtos});
+
+  Data.fromJson(Map<String, dynamic> json) {
+    if (json['produtos'] != null) {
+      produtos = <Produtos>[];
+      json['produtos'].forEach((v) {
+        produtos!.add(new Produtos.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['code'] = this.code;
-    if (this.result != null) {
-      data['result'] = this.result!.map((v) => v.toJson()).toList();
+    if (this.produtos != null) {
+      data['produtos'] = this.produtos!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class Result {
+class Produtos {
   int? id;
   String? nome;
-  String? imagem;
-  int? categoria;
-  String? valor;
   String? ingredientes;
+  double? preco;
+  String? categoria;
+  String? imagemurl;
+  String? createdAt;
+  String? updatedAt;
 
-  Result(
+  Produtos(
       {this.id,
       this.nome,
-      this.imagem,
+      this.ingredientes,
+      this.preco,
       this.categoria,
-      this.valor,
-      this.ingredientes});
+      this.imagemurl,
+      this.createdAt,
+      this.updatedAt});
 
-  Result.fromJson(Map<String, dynamic> json) {
+  Produtos.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     nome = json['nome'];
-    imagem = json['imagem'];
-    categoria = json['categoria'];
-    valor = json['valor'];
     ingredientes = json['ingredientes'];
+    preco = json['preco'];
+    categoria = json['categoria'];
+    imagemurl = json['imagemurl'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['nome'] = this.nome;
-    data['imagem'] = this.imagem;
-    data['categoria'] = this.categoria;
-    data['valor'] = this.valor;
     data['ingredientes'] = this.ingredientes;
+    data['preco'] = this.preco;
+    data['categoria'] = this.categoria;
+    data['imagemurl'] = this.imagemurl;
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
     return data;
   }
 }
